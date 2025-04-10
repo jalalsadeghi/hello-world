@@ -6,13 +6,14 @@ pipeline {
         DOCKER_IMAGE = 'jalalsadeghi/hello-world'
         KUBE_CREDENTIALS_ID = 'kubeconfig' // فایل kubeconfig را از قبل در Jenkins ذخیره کردی
     }
-
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/jalalsadeghi/hello-world.git'
+                git 'https://github.com/jalalsadeghi/hello-world.git';
+                echo "Checkout successfully validated."
             }
         }
+
 
         stage('Build Docker Image') {
             steps {
