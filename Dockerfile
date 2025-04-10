@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y nano \
     && apt-get install -y curl
     
     
+    
 EXPOSE 3000
 
 CMD ["python", "app.py"]
