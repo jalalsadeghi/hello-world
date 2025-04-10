@@ -5,7 +5,8 @@ WORKDIR /app
 COPY . .
 
 RUN apt-get update && apt-get install -y nano \
-    && pip install flask 
+    && pip install flask \
+    && apt-get install -y curl
     
 EXPOSE 3000
 
