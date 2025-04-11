@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_CREDENTIALS_ID = 'docker-hub-credentials' // قبلاً در Jenkins ساختی
+        DOCKER_CREDENTIALS_ID = 'docker-hub-credentials'
         DOCKER_IMAGE = 'jalalsadeghi/hello-world'
-        KUBE_CREDENTIALS_ID = 'kubeconfig' // فایل kubeconfig را از قبل در Jenkins ذخیره کردی
+        KUBE_CREDENTIALS_ID = 'kubeconfig'
     }
     stages {
         stage('Checkout') {
@@ -33,23 +33,23 @@ pipeline {
             }
         }
 
-        // stage('Deploy to Kubernetes') {
-        //     steps {
-        //         withKubeConfig([credentialsId: KUBE_CREDENTIALS_ID]) {
-        //             sh """
-        //             kubectl set image deployment/hallo-welt hallo-welt=${DOCKER_IMAGE}:${env.BUILD_NUMBER} -n websites
-        //             """
-        //         }
-        //     }
-        // }
         stage('Deploy to Kubernetes') {
             steps {
                 withKubeConfig([credentialsId: KUBE_CREDENTIALS_ID]) {
                     sh """
-                    kubectl rollout restart deployment/hallo-welt -n websites
+                    kubectl set image deployment/hallo-welt hallo-welt=${DOCKER_IMAGE}:${env.BUILD_NUMBER} -n websites
                     """
                 }
             }
         }
+        // stage('Deploy to Kubernetes') {
+        //     steps {
+        //         withKubeConfig([credentialsId: KUBE_CREDENTIALS_ID]) {
+        //             sh """
+        //             kubectl rollout restart deployment/hallo-welt -n websites
+        //             """
+        //         }
+        //     }
+        // }
     }
 }

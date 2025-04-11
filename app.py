@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    message = os.getenv('MESSAGE', 'Hello World! 1')
+    message = os.getenv('MESSAGE', 'Hello World! 2')
     return message
 
 
