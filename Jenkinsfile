@@ -38,7 +38,7 @@ pipeline {
             steps {
                 withKubeConfig([credentialsId: KUBE_CREDENTIALS_ID]) {
                     sh """
-                    kubectl set image deployment/hallo-welt hallo-welt=${DOCKER_IMAGE}:${env.BUILD_NUMBER} -n websites
+                    kubectl set image deployment/hallo-welt -n websites
                     """
                 }
             }
