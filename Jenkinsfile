@@ -2,14 +2,15 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_CREDENTIALS_ID = 'docker-hub-credentials' // قبلاً در Jenkins ساختی
+        DOCKER_CREDENTIALS_ID = 'docker-hub-credentials'
         DOCKER_IMAGE = 'jalalsadeghi/hello-world'
-        KUBE_CREDENTIALS_ID = 'kubeconfig' // فایل kubeconfig را از قبل در Jenkins ذخیره کردی
+        KUBE_CREDENTIALS_ID = 'kubeconfig'
     }
+
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/jalalsadeghi/hello-world.git';
+                checkout scm
                 echo "Checkout successfully validated."
             }
         }
@@ -25,7 +26,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    docker.withRegistry('', DOCKER_CREDENTIALS_ID) {
+                    docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS_ID) {
                         docker.image("${DOCKER_IMAGE}:${env.BUILD_NUMBER}").push()
                         docker.image("${DOCKER_IMAGE}:${env.BUILD_NUMBER}").push('latest')
                     }
